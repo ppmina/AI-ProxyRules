@@ -1,0 +1,11 @@
+.claude.com
+.claude.ai
+.anthropic.com
+.cursor.sh
+.cursorapi.com
+.cursor-cdn.com
+.cursor.com
+.openai.com
+.chatgpt.com
+.oaistatic.com
+.oaiusercontent.com

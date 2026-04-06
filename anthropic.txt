@@ -1,0 +1,3 @@
+.claude.com
+.claude.ai
+.anthropic.com
