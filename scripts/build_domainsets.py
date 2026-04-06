@@ -17,7 +17,17 @@ DOMAIN_PATTERN = re.compile(
 )
 SLUG_PATTERN = re.compile(r"^[a-z0-9-]+$")
 PUBLISH_COLLAPSE_SUFFIXES: dict[str, tuple[str, ...]] = {
-    "anthropic": ("claude.com",),
+    "anthropic": (
+        "claude.com",
+        "claude.ai",
+        "anthropic.com",
+    ),
+    "cursor": (
+        "cursor.sh",
+        "cursorapi.com",
+        "cursor-cdn.com",
+        "cursor.com",
+    ),
     "openai": (
         "openai.com",
         "chatgpt.com",
