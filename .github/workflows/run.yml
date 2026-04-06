@@ -15,6 +15,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Set variables
+        run: |
+          echo "RELEASE_NAME=Published on $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+          echo "TAG_NAME=publish-$(date -u +%Y%m%d%H%M%S)" >> "$GITHUB_ENV"
+
       - name: Checkout the default branch
         uses: actions/checkout@v5
 
@@ -39,6 +44,16 @@ jobs:
           git commit -m "Publish domain sets on $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f -u origin release
+
+      - name: Publish GitHub release assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${TAG_NAME}" publish/*.txt \
+            --repo "${{ github.repository }}" \
+            --target "${{ github.sha }}" \
+            --title "${RELEASE_NAME}" \
+            --notes "Published DOMAIN-SET TXT files for direct download."
 
       - name: Purge jsDelivr CDN
         run: |

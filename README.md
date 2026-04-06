@@ -2,7 +2,7 @@
 
 本项目发布适用于 `DOMAIN-SET` 匹配引擎的 AI 服务域名列表。
 
-仓库中的源文件位于 `source/providers/*.txt`，GitHub Actions 会自动生成发布用的 TXT 文件，并强制推送到 `release` 分支，供 `raw.githubusercontent.com` 和 `jsDelivr` 直接引用。
+仓库中的源文件位于 `source/providers/*.txt`，GitHub Actions 会自动生成发布用的 TXT 文件，并强制推送到 `release` 分支，供 `raw.githubusercontent.com` 和 `jsDelivr` 直接引用，同时也会上传到 GitHub Releases 作为可下载附件。
 
 ## DOMAIN-SET 说明
 
@@ -23,6 +23,12 @@
   - `https://cdn.jsdelivr.net/gh/ppmina/AI-ProxyRules@release/ai.txt`
 
 后续新增 `openai.txt`、`anthropic.txt`、`gemini.txt` 等提供方文件时，发布地址遵循相同命名规则。
+
+## GitHub Releases
+
+- 每次工作流发布时都会创建一个新的 GitHub Release
+- Release 附件会包含当前构建生成的 `cursor.txt` 和 `ai.txt`
+- 适合在 GitHub 网页端直接下载文件
 
 ## 源文件与构建
 
@@ -45,4 +51,5 @@ python3 scripts/build_domainsets.py
 - 触发方式：`workflow_dispatch` 或推送到 `main`
 - `README.md` 单独变更时不会触发发布
 - 工作流会重新生成 TXT 文件并强制更新 `release` 分支
+- 工作流会同步创建一个新的 GitHub Release 并上传 TXT 附件
 - 发布完成后会主动刷新 jsDelivr CDN 缓存
