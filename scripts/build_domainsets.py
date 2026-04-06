@@ -16,6 +16,15 @@ DOMAIN_PATTERN = re.compile(
     r"^(?:\*\.)?(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$"
 )
 SLUG_PATTERN = re.compile(r"^[a-z0-9-]+$")
+PUBLISH_COLLAPSE_SUFFIXES: dict[str, tuple[str, ...]] = {
+    "anthropic": ("claude.com",),
+    "openai": (
+        "openai.com",
+        "chatgpt.com",
+        "oaistatic.com",
+        "oaiusercontent.com",
+    ),
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -55,11 +64,59 @@ def normalize_entries(lines: list[str]) -> list[str]:
     return entries
 
 
+def simplify_publish_entries(slug: str, entries: list[str]) -> list[str]:
+    suffixes = PUBLISH_COLLAPSE_SUFFIXES.get(slug)
+    if not suffixes:
+        return entries
+
+    inserts: dict[int, list[str]] = {}
+    unmatched_by_index: dict[int, str] = {}
+
+    for index, entry in enumerate(entries):
+        domain = entry[1:] if entry.startswith(".") else entry
+        matched_suffix: str | None = None
+        for suffix in suffixes:
+            if domain == suffix or domain.endswith(f".{suffix}"):
+                matched_suffix = suffix
+                break
+
+        if matched_suffix is None:
+            unmatched_by_index[index] = entry
+            continue
+
+        collapsed_entry = f".{matched_suffix}"
+        inserts.setdefault(index, [])
+        if collapsed_entry not in inserts[index]:
+            inserts[index].append(collapsed_entry)
+
+    simplified: list[str] = []
+    seen: set[str] = set()
+
+    for index in range(len(entries)):
+        for entry in inserts.get(index, []):
+            if entry in seen:
+                continue
+            seen.add(entry)
+            simplified.append(entry)
+
+        if index not in unmatched_by_index:
+            continue
+
+        unmatched_entry = unmatched_by_index[index]
+        if unmatched_entry in seen:
+            continue
+        seen.add(unmatched_entry)
+        simplified.append(unmatched_entry)
+
+    return simplified
+
+
 def build_provider_set(path: Path) -> tuple[str, list[str]]:
     slug = path.stem
     if not SLUG_PATTERN.fullmatch(slug):
         raise ValueError(f"Invalid provider filename: {path.name}")
     entries = normalize_entries(path.read_text(encoding="utf-8").splitlines())
+    entries = simplify_publish_entries(slug, entries)
     return slug, entries
 
 
@@ -119,9 +176,7 @@ def main() -> None:
     provider_sets = collect_provider_sets(source_dir)
     written_files = write_outputs(provider_sets, output_dir)
 
-    print(
-        f"Built {len(provider_sets)} provider file(s) and ai.txt into {output_dir}"
-    )
+    print(f"Built {len(provider_sets)} provider file(s) and ai.txt into {output_dir}")
     print("Published files:")
     for path in written_files:
         print(f"- {path.name}")

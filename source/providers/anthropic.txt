@@ -1,0 +1,10 @@
+# Anthropic / Claude
+claude.com
+platform.claude.com
+support.claude.com
+claude.ai
+api.anthropic.com
+statsig.anthropic.com
+console.anthropic.com
+support.anthropic.com
+assets-proxy.anthropic.com
