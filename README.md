@@ -13,14 +13,14 @@
 
 ## 在线地址（URL）
 
-> 当前仓库尚未配置远程地址，以下示例使用 `<owner>/<repo>` 占位。连接到 GitHub 后，将其替换为实际仓库路径即可。
+> 仓库发布分支为 `release`，可以通过以下地址直接引用。
 
 - `cursor.txt`
-  - `https://raw.githubusercontent.com/<owner>/<repo>/release/cursor.txt`
-  - `https://cdn.jsdelivr.net/gh/<owner>/<repo>@release/cursor.txt`
+  - `https://raw.githubusercontent.com/ppmina/AI-ProxyRules/release/cursor.txt`
+  - `https://cdn.jsdelivr.net/gh/ppmina/AI-ProxyRules@release/cursor.txt`
 - `ai.txt`
-  - `https://raw.githubusercontent.com/<owner>/<repo>/release/ai.txt`
-  - `https://cdn.jsdelivr.net/gh/<owner>/<repo>@release/ai.txt`
+  - `https://raw.githubusercontent.com/ppmina/AI-ProxyRules/release/ai.txt`
+  - `https://cdn.jsdelivr.net/gh/ppmina/AI-ProxyRules@release/ai.txt`
 
 后续新增 `openai.txt`、`anthropic.txt`、`gemini.txt` 等提供方文件时，发布地址遵循相同命名规则。
 
