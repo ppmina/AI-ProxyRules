@@ -8,3 +8,4 @@ statsig.anthropic.com
 console.anthropic.com
 support.anthropic.com
 assets-proxy.anthropic.com
+nexus-websocket-a.intercom.io
