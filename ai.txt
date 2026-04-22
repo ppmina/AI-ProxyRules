@@ -1,0 +1,14 @@
+.claude.com
+.claude.ai
+.anthropic.com
+nexus-websocket-a.intercom.io
+api-iam.intercom.io
+browser-intake-us5-datadoghq.com
+.cursor.sh
+.cursorapi.com
+.cursor-cdn.com
+.cursor.com
+.openai.com
+.chatgpt.com
+.oaistatic.com
+.oaiusercontent.com

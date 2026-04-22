@@ -1,0 +1,6 @@
+.claude.com
+.claude.ai
+.anthropic.com
+nexus-websocket-a.intercom.io
+api-iam.intercom.io
+browser-intake-us5-datadoghq.com
