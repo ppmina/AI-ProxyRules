@@ -3,6 +3,7 @@ claude.com
 platform.claude.com
 support.claude.com
 claude.ai
+claudeusercontent.com
 api.anthropic.com
 statsig.anthropic.com
 console.anthropic.com
