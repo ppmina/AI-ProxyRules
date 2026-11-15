@@ -1,0 +1,4 @@
+.cursor.sh
+.cursorapi.com
+.cursor-cdn.com
+.cursor.com
